@@ -1,0 +1,144 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
+
+:root {
+  /* Global Tokens (assuming they might not be included if index.css is empty) */
+  --white: #ffffff;
+  --off-white: #f8fafc;
+  --navy: #0d1117;
+  --navy-soft: #1a2332;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --blue-mid: #93c5fd;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --green: #10b981;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --amber-light: #fef3c7;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius-card: 20px;
+  --radius-btn: 12px;
+  --radius-md: 12px;
+  --radius-full: 9999px;
+
+  /* AUTH SPECIFIC DESIGN SYSTEM */
+  --auth-panel-bg: linear-gradient(145deg, #1e3a8a 0%, #2563eb 45%, #7c3aed 100%);
+  --auth-card-bg: #ffffff;
+  --auth-input-bg: #f8fafc;
+  --auth-input-border: #e2e8f0;
+  --auth-input-focus: #2563eb;
+  --auth-input-radius: 10px;
+  --auth-input-height: 48px;
+
+  /* Password strength colors */
+  --strength-weak:   #ef4444;
+  --strength-fair:   #f59e0b;
+  --strength-good:   #3b82f6;
+  --strength-strong: #10b981;
+
+  /* Step indicator */
+  --step-inactive: #e2e8f0;
+  --step-active: #2563eb;
+  --step-done: #10b981;
+}
+
+/* Keyframes */
+@keyframes panelFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(0.5deg); }
+  66%       { transform: translateY(-6px) rotate(-0.3deg); }
+}
+@keyframes dotOrbit {
+  from { transform: rotate(0deg) translateX(40px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+}
+@keyframes strengthPulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.7; }
+}
+@keyframes checkDraw {
+  from { stroke-dashoffset: 40; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes otpShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX(8px); }
+  60%     { transform: translateX(-5px); }
+  80%     { transform: translateX(5px); }
+}
+@keyframes clockTick {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes approvalPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.3); }
+  50%     { box-shadow: 0 0 0 20px rgba(37,99,235,0); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Input focus styles */
+.auth-input {
+  width: 100%;
+  height: var(--auth-input-height);
+  background: var(--auth-input-bg);
+  border: 1.5px solid var(--auth-input-border);
+  border-radius: var(--auth-input-radius);
+  padding: 0 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+.auth-input:focus {
+  border-color: var(--auth-input-focus);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.auth-input.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+.auth-input::placeholder { color: var(--gray-400); font-weight: 300; }
+
+.auth-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--gray-800);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.01em;
+}
+.auth-field { margin-bottom: 1.25rem; position: relative; }
+.auth-error-msg {
+  font-size: 0.75rem;
+  color: var(--red);
+  margin-top: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Global resets for Auth pages */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
