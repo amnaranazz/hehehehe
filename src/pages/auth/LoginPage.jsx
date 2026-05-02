@@ -42,6 +42,7 @@ export default function LoginPage() {
       await login(email, password, rememberMe);
       // usePharmacistAuth handles redirect via ProtectedRoute
     } catch (err) {
+      setErrors({ form: err.message || 'Invalid credentials' });
       showToast({ type: 'error', message: err.message || 'Invalid credentials' });
     }
   }
@@ -256,6 +257,13 @@ export default function LoginPage() {
               </span>
             </label>
           </div>
+
+          {errors.form && (
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background: 'var(--severity-critical-bg)', color: 'var(--severity-critical)', padding: '0.75rem', borderRadius: 'var(--radius-md)', fontSize: '0.82rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <AlertCircle size={14} />
+              {errors.form}
+            </motion.div>
+          )}
 
           <motion.div animate={shake ? { x: [0, -8, 8, -5, 5, 0] } : {}} transition={{ duration: 0.4 }}>
             <Button

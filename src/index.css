@@ -1,5 +1,5 @@
 /* src/index.css */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
 
 :root {
   /* Global Tokens (assuming they might not be included if index.css is empty) */
@@ -19,7 +19,7 @@
   --red: #ef4444;
   --amber: #f59e0b;
   --amber-light: #fef3c7;
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --radius-card: 20px;
   --radius-btn: 12px;
@@ -141,4 +141,216 @@ body, html {
 
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD DESIGN SYSTEM TOKENS
+═══════════════════════════════════════════════ */
+:root {
+  /* Dashboard specific */
+  --dash-bg: #f4f5f7;
+  --dash-card: #ffffff;
+  --dash-card-dark: #0f0f0f;
+  --dash-border: rgba(0,0,0,0.06);
+  --dash-radius: 20px;
+  --dash-radius-sm: 12px;
+  --dash-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  --dash-shadow-hover: 0 8px 32px rgba(0,0,0,0.1);
+
+  /* Sidebar */
+  --sidebar-width: 220px;
+  --sidebar-bg: #ffffff;
+  --sidebar-active-bg: #0f0f0f;
+  --sidebar-active-text: #ffffff;
+  --sidebar-text: #64748b;
+  --sidebar-hover-bg: #f4f5f7;
+
+  /* Typography scale */
+  --text-metric: 2rem;
+  --text-metric-sm: 1.5rem;
+  --text-label: 0.75rem;
+  --text-body: 0.875rem;
+
+  /* Severity */
+  --severity-critical: #ef4444;
+  --severity-critical-bg: #fff1f0;
+  --severity-warning: #f59e0b;
+  --severity-warning-bg: #fffbeb;
+  --severity-info: #3b82f6;
+  --severity-info-bg: #eff6ff;
+
+  /* Extended colors */
+  --gray-300: #cbd5e1;
+  --red-light: #fff1f0;
+  --green-light: #f0fdf4;
+}
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD KEYFRAMES
+═══════════════════════════════════════════════ */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes alertPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes dotFadeIn {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes typingDot {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50%       { opacity: 1;   transform: translateY(-3px); }
+}
+@keyframes shimmerLoad {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD UTILITY CLASSES
+═══════════════════════════════════════════════ */
+.dash-card {
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  box-shadow: var(--dash-shadow);
+}
+
+.dash-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmerLoad 1.5s infinite;
+  border-radius: var(--dash-radius);
+}
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Recharts tooltip global override */
+.recharts-tooltip-wrapper { z-index: 100; }
+.recharts-default-tooltip {
+  border-radius: 12px !important;
+  border: 1px solid var(--dash-border) !important;
+  box-shadow: var(--dash-shadow-hover) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   PRESCRIPTION REVIEW SPECIFIC
+═══════════════════════════════════════════════ */
+:root {
+  --rx-pending:   #f59e0b;
+  --rx-pending-bg: #fffbeb;
+  --rx-approved:  #10b981;
+  --rx-approved-bg: #d1fae5;
+  --rx-flagged:   #f97316;
+  --rx-flagged-bg: #fff7ed;
+  --rx-rejected:  #ef4444;
+  --rx-rejected-bg: #fee2e2;
+
+  --confidence-high:   #10b981;
+  --confidence-medium: #f59e0b;
+  --confidence-low:    #ef4444;
+
+  --viewer-bg: #1a1a2e;
+  --viewer-controls: rgba(255,255,255,0.08);
+}
+
+@keyframes scanLine {
+  from { transform: translateY(-100%); opacity: 0.6; }
+  to   { transform: translateY(400%); opacity: 0; }
+}
+@keyframes pulseRing {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+@keyframes slidePanel {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes processingPulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.4; }
+}
+@keyframes checkStroke {
+  from { stroke-dashoffset: 60; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes rejectShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-6px); }
+  40%     { transform: translateX(6px); }
+  60%     { transform: translateX(-4px); }
+  80%     { transform: translateX(4px); }
+}
+
+/* Zoom/pan cursor */
+.viewer-grab { cursor: grab; }
+.viewer-grab:active { cursor: grabbing; }
+
+/* Rich text note */
+.rx-note-textarea {
+  width: 100%;
+  min-height: 80px;
+  background: var(--dash-bg);
+  border: 1.5px solid var(--dash-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--navy);
+  font-weight: 300;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.rx-note-textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  background: white;
+}
+.rx-note-textarea::placeholder {
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+/* Table row hover */
+.rx-table-row {
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.rx-table-row:hover { background: var(--dash-bg); }
+.rx-table-row.selected { background: rgba(37,99,235,0.04);
+  border-left: 3px solid var(--blue); }
+
+/* ═══════════════════════════════════════════════
+   PRINT STYLES FOR ORDERS
+═══════════════════════════════════════════════ */
+@media print {
+  body * { visibility: hidden; }
+  .print-container, .print-container * { visibility: visible; }
+  .print-container {
+    position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0;
+    box-shadow: none !important; background: white !important;
+  }
+  .no-print { display: none !important; }
+  .print-only, .print-only-header, .print-only-footer { display: block !important; }
+  .print-body { flex-direction: column !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
