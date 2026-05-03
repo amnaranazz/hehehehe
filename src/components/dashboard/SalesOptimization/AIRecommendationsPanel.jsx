@@ -82,32 +82,53 @@ const RecommendationCard = ({ item, index, onAction }) => (
       </p>
     </div>
 
-    {/* Action button */}
-    <motion.button
-      whileHover={{ x: 3, color: item.color }}
-      whileTap={{ scale: 0.97 }}
-      onClick={() => onAction(item)}
-      style={{
-        alignSelf:  'flex-end',
-        background: 'transparent',
-        border:     'none',
-        color:      'var(--navy)',
-        fontSize:   '0.75rem',
-        fontWeight: 700,
-        cursor:     'pointer',
-        display:    'flex',
-        alignItems: 'center',
-        gap:        4,
-        padding:    0,
-        fontFamily: 'var(--font-body)',
-        transition: 'color 0.15s',
-      }}
-    >
-      Take Action
-      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="9 18 15 12 9 6" />
-      </svg>
-    </motion.button>
+    {/* Action buttons */}
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <motion.button
+        whileHover={{ x: 3, color: item.color }}
+        whileTap={{ scale: 0.97 }}
+        onClick={() => onAction(item, 'primary')}
+        style={{
+          background: 'transparent',
+          border:     'none',
+          color:      'var(--navy)',
+          fontSize:   '0.75rem',
+          fontWeight: 700,
+          cursor:     'pointer',
+          display:    'flex',
+          alignItems: 'center',
+          gap:        4,
+          padding:    0,
+          fontFamily: 'var(--font-body)',
+          transition: 'color 0.15s',
+        }}
+      >
+        {item.type === 'stock_up' || item.type === 'demand_spike' ? 'Reorder Now' : (item.suggestedAction || 'Take Action')}
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </motion.button>
+      
+      <motion.button
+        whileHover={{ color: 'var(--red)' }}
+        whileTap={{ scale: 0.97 }}
+        onClick={() => onAction(item, 'dismiss')}
+        style={{
+          background: 'transparent',
+          border:     'none',
+          color:      'var(--gray-400)',
+          fontSize:   '0.7rem',
+          fontWeight: 600,
+          cursor:     'pointer',
+          padding:    0,
+          fontFamily: 'var(--font-body)',
+          transition: 'color 0.15s',
+        }}
+      >
+        Dismiss
+      </motion.button>
+    </div>
   </motion.div>
 );
 
@@ -177,8 +198,17 @@ export default function AIRecommendationsPanel({ pool, selectedPeriod }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
-  const handleAction = (item) => {
-    setToastMsg(`Action logged for: ${item.title}`);
+  const handleAction = (item, actionType) => {
+    if (actionType === 'dismiss') {
+      setRecommendations(prev => prev.filter(r => r.id !== item.id));
+      setToastMsg(`Dismissed: ${item.title}`);
+    } else {
+      setToastMsg(`Action logged for: ${item.title}`);
+      if (item.type === 'stock_up' || item.type === 'demand_spike') {
+        // In a real app this would navigate to /pharmacist/inventory/:id/edit
+        setTimeout(() => window.location.hash = `/inventory/edit/${item.id}`, 1000);
+      }
+    }
     setTimeout(() => setToastMsg(''), 3000);
   };
 

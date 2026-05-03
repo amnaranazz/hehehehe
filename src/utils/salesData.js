@@ -178,6 +178,8 @@ export const salesData = {
     kpis: {
       revenue:  { value: 84500,   delta:  5.2 },
       units:    { value: 680,     delta:  2.1 },
+      orders:   { value: 245,     delta:  3.5 },
+      topCategory: { value: 'Pain Relief', delta: 0 },
       aov:      { value: 124,     delta:  3.0 },
       lowStock: { value: 8,       delta: -2 },   // negative = fewer alerts (good)
     },
@@ -193,6 +195,8 @@ export const salesData = {
     kpis: {
       revenue:  { value: 425600, delta:  12.5 },
       units:    { value: 3450,   delta:   8.4 },
+      orders:   { value: 1120,   delta:  10.2 },
+      topCategory: { value: 'Chronic Disease', delta: 0 },
       aov:      { value: 123,    delta:   3.8 },
       lowStock: { value: 18,     delta:   4 },
     },
@@ -208,6 +212,8 @@ export const salesData = {
     kpis: {
       revenue:  { value: 1285000, delta: -2.4 },
       units:    { value: 10240,   delta: -1.2 },
+      orders:   { value: 3450,    delta: -0.5 },
+      topCategory: { value: 'Antibiotics', delta: 0 },
       aov:      { value: 125,     delta: -1.2 },
       lowStock: { value: 24,      delta:  6 },
     },

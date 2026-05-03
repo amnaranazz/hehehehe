@@ -15,15 +15,17 @@ import { salesData, aiRecommendationsPool } from '../../utils/salesData';
 import RevenueChart            from '../../components/charts/RevenueChart';
 import ProductBarChart         from '../../components/charts/ProductBarChart';
 import CategoryDonut           from '../../components/charts/CategoryDonut';
+import SalesHeatmap            from '../../components/charts/SalesHeatmap';
 import AIRecommendationsPanel  from '../../components/dashboard/SalesOptimization/AIRecommendationsPanel';
 import ProductPerformanceTable from '../../components/dashboard/SalesOptimization/ProductPerformanceTable';
 import SlowMoversAlert         from '../../components/dashboard/SalesOptimization/SlowMoversAlert';
 
 // ── Period config ──────────────────────────────────────────────────────
 const PERIODS = [
-  { id: 'last7',  label: 'Last 7 Days'  },
-  { id: 'last30', label: 'Last 30 Days' },
-  { id: 'last90', label: 'Last 90 Days' },
+  { id: 'today',  label: 'Today' },
+  { id: 'last7',  label: 'This Week'  },
+  { id: 'last30', label: 'This Month' },
+  { id: 'last90', label: 'This Quarter' },
   { id: 'custom', label: 'Custom Range' },
 ];
 
@@ -67,7 +69,7 @@ const KPICard = ({ title, icon: Icon, color, value, delta, isAlert }) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 3, fontSize: '0.72rem', fontWeight: 700, color: deltaColor, background: `${deltaColor}14`, padding: '2px 7px', borderRadius: 5 }}>
           <DeltaIcon size={11} />
-          {Math.abs(delta)}{title === 'Low Stock Alerts' ? '' : '%'}
+          {title === 'Top Selling Category' ? '' : Math.abs(delta)}{title === 'Low Stock Alerts' || title === 'Top Selling Category' ? '' : '%'}
           <span style={{ fontWeight: 400, color: 'var(--gray-400)', fontSize: '0.65rem', marginLeft: 1 }}>vs last</span>
         </div>
       </div>
@@ -178,10 +180,12 @@ export default function SalesOptimization() {
 
       {/* ── 2. KPI STRIP ────────────────────────────────────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
-        <KPICard title="Total Revenue"    icon={DollarSign}    color="var(--blue)"              value={kpis.revenue.value}  delta={kpis.revenue.delta}  isAlert={false} />
-        <KPICard title="Units Sold"       icon={Package}       color="var(--green)"             value={kpis.units.value}    delta={kpis.units.delta}    isAlert={false} />
-        <KPICard title="Avg. Order Value" icon={TrendingUp}    color="#8b5cf6"                  value={kpis.aov.value}      delta={kpis.aov.delta}      isAlert={false} />
-        <KPICard title="Low Stock Alerts" icon={AlertTriangle} color="var(--amber)"             value={kpis.lowStock.value} delta={kpis.lowStock.delta} isAlert={true}  />
+        <KPICard title="Total Revenue"    icon={DollarSign}    color="var(--blue)"              value={kpis.revenue?.value || 0}  delta={kpis.revenue?.delta || 0}  isAlert={false} />
+        <KPICard title="Total Orders"     icon={Package}       color="#f97316"                  value={kpis.orders?.value || 0}   delta={kpis.orders?.delta || 0}   isAlert={false} />
+        <KPICard title="Units Sold"       icon={Package}       color="var(--green)"             value={kpis.units?.value || 0}    delta={kpis.units?.delta || 0}    isAlert={false} />
+        <KPICard title="Top Selling Category" icon={TrendingUp} color="#10b981"                 value={kpis.topCategory?.value || 'N/A'} delta={0}                  isAlert={false} />
+        <KPICard title="Avg. Order Value" icon={TrendingUp}    color="#8b5cf6"                  value={kpis.aov?.value || 0}      delta={kpis.aov?.delta || 0}      isAlert={false} />
+        <KPICard title="Low Stock Alerts" icon={AlertTriangle} color="var(--amber)"             value={kpis.lowStock?.value || 0} delta={kpis.lowStock?.delta || 0} isAlert={true}  />
       </div>
 
       {/* ── 3. CHARTS ───────────────────────────────────────────────── */}
@@ -198,6 +202,10 @@ export default function SalesOptimization() {
           selectedPeriod={activeKey}
         />
         <CategoryDonut data={categoryBreakdown} selectedPeriod={activeKey} />
+      </div>
+
+      <div style={{ marginBottom: '1.5rem' }}>
+        <SalesHeatmap selectedPeriod={activeKey} />
       </div>
 
       {/* ── 4. AI RECOMMENDATIONS ───────────────────────────────────── */}
